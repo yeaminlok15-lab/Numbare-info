@@ -139,3 +139,6 @@ app.listen(PORT, () => {
     console.log(`🔗 Endpoint: http://localhost:${PORT}/api/v1/ultimate-device-lookup`);
     console.log(`==================================================`);
 });
+     // Export the app for Vercel Serverless Functions
+module.exports = app;
+
