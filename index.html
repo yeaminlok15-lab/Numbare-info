@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Number & Device Lookup</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0f172a; 
+            color: #f8fafc; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 600px; 
+            width: 100%; 
+            background: #1e293b; 
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+            margin-top: 40px;
+        }
+        h2 { 
+            text-align: center; 
+            color: #38bdf8; 
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        input { 
+            width: 100%; 
+            padding: 14px; 
+            border: 2px solid #334155; 
+            border-radius: 8px; 
+            background: #0f172a; 
+            color: #fff; 
+            font-size: 16px; 
+            transition: 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #38bdf8;
+        }
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            background: #0284c7; 
+            border: none; 
+            color: white; 
+            font-size: 16px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+        }
+        button:hover { 
+            background: #0369a1; 
+        }
+        .result-section {
+            display: none;
+            margin-top: 25px;
+        }
+        h3 { 
+            color: #38bdf8; 
+            margin-bottom: 10px; 
+            font-size: 18px;
+        }
+        pre { 
+            background: #0f172a; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border: 1px solid #334155; 
+            overflow-x: auto; 
+            font-size: 14px; 
+            color: #34d399; 
+            max-height: 450px; 
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📱 Ultimate Number Lookup Dashboard</h2>
+    
+    <div class="input-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" id="phoneNumber" placeholder="Enter number (e.g., 01983114073)">
+    </div>
+    
+    <button onclick="lookupNumber()">Search Identity & Device Info</button>
+    
+    <div class="result-section" id="resultSection">
+        <h3>🔍 Live API Response Data:</h3>
+        <pre id="output"></pre>
+    </div>
+</div>
+
+<script>
+async function lookupNumber() {
+    const num = document.getElementById('phoneNumber').value.trim();
+    const resultSection = document.getElementById('resultSection');
+    const output = document.getElementById('output');
+    
+    if(!num) {
+        alert("Please enter a valid phone number!");
+        return;
+    }
+    
+    // Show loading state
+    resultSection.style.display = "block";
+    output.innerText = "Connecting to Vercel Serverless Function...\nFetching real-time dataset...";
+    
+    try {
+        // Automatically communicates with your live Vercel post route
+        const response = await fetch('https://numbare-info-3c5z.vercel.app/api/v1/ultimate-device-lookup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                number: num, 
+                device_name: "Chrome Web Interface",
+                os_version: "Web Browser Environment",
+                network_type: "Browser Network Fetch"
+            })
+        });
+        
+        const data = await response.json();
+        
+        // Output the beautiful formatted JSON response directly onto the page
+        output.innerText = JSON.stringify(data, null, 2);
+    } catch (error) {
+        output.innerText = "❌ Error connecting to API: " + error.message;
+    }
+}
+</script>
+
+</body>
+</html>
+
