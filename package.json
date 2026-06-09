@@ -1,0 +1,15 @@
+{
+  "name": "ultimate-number-api",
+  "version": "1.0.0",
+  "description": "Ultimate Number and Device Info Lookup API",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
